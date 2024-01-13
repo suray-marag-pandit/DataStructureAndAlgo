@@ -54,7 +54,7 @@ int main(){
 
     root = build(root);
     
-    //10 20 30 40 -1 -1 50 -1 -1 -1 60 70 -1 -1 80 -1 -1
+    //1 2 4 -1 -1 5 6 -1 -1 -1 3 -1 7 8 9 -1 -1 -1 -1
 
     cout<<endl<<height(root)<<endl;
     return 0;
