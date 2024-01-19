@@ -40,15 +40,40 @@ node * build(node * root){
     
 }
 
-pair<int,int> diameter(node * root){
+
+int height(node * root){
+    if(root==NULL)
+        return 0;
+
+    int left = height(root->left);
+    int right = height(root->right);
+
+    return max(left,right)+1;
+}
+
+
+int diameter(node * root){
+    if(root==NULL)
+        return 0;
+    
+    int left = diameter(root->left);
+    int right = diameter(root->right);
+    int lheight = height(root->left)+height(root->right)+1;
+
+    int ans = max(left,max(right,lheight));
+    return ans;
+}
+
+
+pair<int,int> fastdiameter(node * root){
 
     if(root==NULL){
         pair<int,int> p = make_pair(0,0);
         return p;
     }
 
-    pair<int,int> left = diameter(root->left);
-    pair<int,int> right = diameter(root->right);
+    pair<int,int> left = fastdiameter(root->left);
+    pair<int,int> right = fastdiameter(root->right);
 
     int op1 = left.first;
     int op2 = right.first;
@@ -61,16 +86,16 @@ pair<int,int> diameter(node * root){
     return ans;
 
 }
+
 int main(){
 
     node * root =NULL;
     build(root);
 
-    pair<int,int> ans = diameter(root);
+    // 10 20 30 40 -1 -1 50 -1 -1 -1 60 70 -1 -1 80 -1 -1
+    pair<int,int> ans = fastdiameter(root);
 
     cout<<ans.first;
-    cout<<ans.second;
-    
     
     return 0;
 }
