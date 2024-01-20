@@ -50,12 +50,14 @@ void leftTraversal(node * root,vector<int> &ans){
     }
 
     ans.push_back(root->data);
-    leftTraversal(root->left,ans);
-    leftTraversal(root->right,ans);
+    if(root->left)
+        leftTraversal(root->left,ans);
+    else
+        leftTraversal(root->right,ans);
 }
 
 void leafnode(node * root,vector<int> &ans){
-    if((root==NULL)){
+    if(root==NULL){
         return ;
     }
 
@@ -65,7 +67,6 @@ void leafnode(node * root,vector<int> &ans){
 
     leafnode(root->left,ans);
     leafnode(root->right,ans);
-
 }
 
 void rightTraversal(node * root, vector<int> &ans){
@@ -74,8 +75,34 @@ void rightTraversal(node * root, vector<int> &ans){
             return;
     }
 
-    rightTraversal(root->right,ans);
-    rightTraversal(root->left,ans);
-    
+    if(root->right)
+        rightTraversal(root->right,ans);
+    else
+        rightTraversal(root->left,ans);
 
+    ans.push_back(root->data);
+
+}
+
+
+int main(int argc, char const *argv[])
+{
+    node * root =NULL;
+    root = build(root);
+
+    // 10 20 30 40 -1 -1 50 -1 -1 -1 60 70 -1 -1 80 -1 -1
+    vector<int> ans;
+    ans.push_back(root->data);
+    
+    leftTraversal(root->left,ans);
+    leafnode(root->left,ans);
+    leafnode(root->right,ans);
+    rightTraversal(root->right,ans);
+
+    cout<<endl;
+    for(auto i:ans){
+        cout<<i<<" ";
+    }
+
+    return 0;
 }
