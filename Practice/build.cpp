@@ -229,6 +229,38 @@ bool checkIdentical(node * root1,node * root2){
 
 }
 
+pair<bool,int> checkSum(node * root){
+    //base case
+    if(root==NULL){
+        pair<bool,int> p = make_pair(true,0);
+        return p;
+    }
+
+    if(root->left==NULL && root->right==NULL){
+        pair<bool,int> p = make_pair(true,root->data);
+        return p;
+    }
+
+    pair<bool,int> left = checksum(root->left);
+    pair<bool,int> right = checksum(root->right);
+
+    pair<bool,int> ans;
+
+    bool sum = root->data == (left.second+right.second)+1;
+    
+    if(left.first && right.first && sum){
+        ans.first=true;
+        ans.second=2*root->data;
+    }
+    else{
+        ans.first=false;
+    }
+    return ans;
+}
+
+vector<int> spiralTraverse(node * root){
+    
+}
 
 int main(int argc, char const* argv[]) {
     node* root = NULL;

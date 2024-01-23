@@ -84,6 +84,15 @@ vector<int> Zig(node *root)
     return result;
 }
 
+vector<int> spiral(node* root){
+    vector<int> result;
+    if(root==NULL)
+        return result;
+
+    
+
+}
+
 int main()
 {
     node *root = NULL;
