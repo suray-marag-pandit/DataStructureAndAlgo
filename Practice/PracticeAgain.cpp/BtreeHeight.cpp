@@ -74,6 +74,7 @@ int height(node * root){
 
     return max(left,right)+1;
 }
+
 int main(int argc, char const *argv[])
 {
 
