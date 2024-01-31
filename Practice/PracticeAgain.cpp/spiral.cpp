@@ -47,11 +47,13 @@ vector<int> spiralTraversal(node *root){
         return k;
     }
 
+
     queue<node *> q;
     q.push(root);
     bool LR = true;
 
     if(!q.empty()){
+        
         int n = q.size();
         vector<int> ans;
 
