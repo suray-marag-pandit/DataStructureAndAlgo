@@ -43,6 +43,7 @@ node * build(node * root){
 
 vector<int> spiralTraversal(node *root){
     vector<int> k;
+
     if(root==NULL){
         return k;
     }
@@ -55,15 +56,38 @@ vector<int> spiralTraversal(node *root){
     if(!q.empty()){
         
         int n = q.size();
-        vector<int> ans;
+        vector<int> ans(n);
 
         for(int i=0;i<n;i++){
             
+            node *temp = q.front();
+            q.pop();
 
+            int index;
+            if(LR==true){
+                index=i;
+            }
+            else{
+                index=n-i;
+            }
+
+            ans[index] = temp->data;
+
+            if(temp->left!=NULL)
+                q.push(temp->left);
+
+            if(temp->right!=NULL)
+                q.push(temp->right);
         }
 
-
+        for(auto i : ans){
+            k.push_back(i);
+        }
+        
+        LR=!LR;
     }
+
+    return k;
 }
 
 int main(){
@@ -72,6 +96,15 @@ int main(){
     root = build(root);
     
     //10 20 30 40 -1 -1 50 -1 -1 -1 60 70 -1 -1 80 -1 -1
+
+    vector<int> ans = spiralTraversal(root);
+
+    cout<<endl;
+    for (auto i =0;i< ans.size();i++)
+    {
+        cout<<ans[i]<<" ";
+    }
+    
 
 
     return 0;
