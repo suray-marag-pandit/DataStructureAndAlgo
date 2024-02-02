@@ -94,7 +94,7 @@ int index(int inorder[],int target,int size){
     return -1;
 }
 
-node * inordrePreorerBuild(int inorder[],int preorder[],int &preindex,int instart,int inend,int size){
+node * inPreBuild(int inorder[],int preorder[],int &preindex,int instart,int inend,int size){
     if(preindex>=size || instart > inend){
         return NULL;
     }
@@ -103,8 +103,8 @@ node * inordrePreorerBuild(int inorder[],int preorder[],int &preindex,int instar
     node * root = new node(temp);
     int position = index(inorder,temp,size);
 
-    root->left = inordrePreorerBuild(inorder,preorder,preindex,instart,position-1,size);
-    root->right = inordrePreorerBuild(inorder,preorder,preindex,position+1,inend,size);
+    root->left = inPreBuild(inorder,preorder,preindex,instart,position-1,size);
+    root->right = inPreBuild(inorder,preorder,preindex,position+1,inend,size);
 
     return root;
 }
@@ -117,7 +117,7 @@ int main()
     int pre[]={0,1,3,4,2,5};
     int s = 0;
 
-    root = inordrePreorerBuild(in,pre,s,0,6,6);
+    root = inPreBuild(in,pre,s,0,6,6);
 
     // 10 20 30 40 -1 -1 50 -1 -1 -1 60 70 -1 -1 80 -1 -1
     LinearOutputBFS(root);
