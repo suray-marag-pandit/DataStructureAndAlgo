@@ -18,6 +18,7 @@ class node{
 };
 
 node * build(node * root){
+    
     cout<<"Enter the data: ";
     int data;
     cin>>data;
