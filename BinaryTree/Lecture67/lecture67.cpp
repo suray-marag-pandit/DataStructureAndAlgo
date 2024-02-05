@@ -77,7 +77,7 @@ node *createmap(node *root, int target, map<node *, node *> &m)
     return targetnode;
 }
 
-int burn(node *target, map<node *, node* > m)
+int burn(node *target, map<node *, node* > &m)
 {
     map<node *, bool> visited;
     queue<node *> travel;
