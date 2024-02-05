@@ -55,7 +55,7 @@ node *createmap(node *root, int target, map<node *, node *> &m)
     while (!q.empty())
     {
         node *temp = q.front();
-        q.pop();
+        q.pop(); 
 
         if (temp->left)
         {
