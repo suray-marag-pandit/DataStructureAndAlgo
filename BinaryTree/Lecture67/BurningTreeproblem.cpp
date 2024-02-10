@@ -22,7 +22,7 @@ public:
 
 node *build(node *root)
 {
-    // cout << "Enter the data: ";
+    cout << "Enter the data: ";
     int data;
     cin >> data;
 
