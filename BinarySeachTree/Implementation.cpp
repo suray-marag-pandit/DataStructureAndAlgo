@@ -51,7 +51,7 @@ void takeinput(node * &root)
     }
 }
 
-//to display the level order in one line 
+
 void LinearOutputBFS(node * root){
 
     //queue creation
