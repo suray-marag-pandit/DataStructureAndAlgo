@@ -54,17 +54,45 @@ void takeinput(node *&root)
     }
 }
 
-void inorder(node *root)
+bool isPresent(node *root, int element)
 {
+
     if (root == NULL)
     {
-        return;
+        return false;
+    }
+    if (root->data == element)
+    {
+        return true;
     }
 
-    inorder(root->left);
-    cout << root->data << " ";
-    inorder(root->right);
+    if (root->data < element)
+        return isPresent(root->right, element);
+    else
+        return isPresent(root->left, element);
 }
+
+bool iteration(node * root,int data){
+    if(root==NULL){
+        return false;
+    }
+
+    node * temp =root;
+
+    while(temp!=NULL){
+        if(temp->data==data){
+            return true;
+        }
+        if(temp->data > data){
+            temp=temp->left;
+        }else{
+            temp=temp->right;
+        }
+    }
+
+    return false;
+}
+
 int main(int argc, char const *argv[])
 {
     node *root = NULL;
@@ -72,9 +100,8 @@ int main(int argc, char const *argv[])
     // 10 8 21 7 27 5 4 3 -1
     cout << "Enter the data";
     takeinput(root);
-
-    cout << "Inorder traversal of the tree" << endl;
-    inorder(root);
+    cout << "The element is: " << iteration(root, 5);
+    cout << "The element is: " << isPresent(root, 11);
 
     return 0;
 }

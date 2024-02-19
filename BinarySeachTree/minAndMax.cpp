@@ -1,5 +1,5 @@
 #include <iostream>
-#include <queue>
+
 using namespace std;
 
 class node
@@ -54,27 +54,36 @@ void takeinput(node *&root)
     }
 }
 
-void inorder(node *root)
-{
-    if (root == NULL)
-    {
-        return;
+int min(node * root){
+    node * temp = root;
+
+    while(temp->left!=NULL){
+        temp=temp->left;
     }
 
-    inorder(root->left);
-    cout << root->data << " ";
-    inorder(root->right);
+    return temp->data;
+}
+
+int max(node * root){
+    node * temp = root;
+
+    while(temp->right!=NULL){
+        temp=temp->right;
+    }
+
+    return temp->data;
 }
 int main(int argc, char const *argv[])
 {
     node *root = NULL;
 
     // 10 8 21 7 27 5 4 3 -1
-    cout << "Enter the data";
+    cout << "Enter the data: ";
     takeinput(root);
 
-    cout << "Inorder traversal of the tree" << endl;
-    inorder(root);
+    cout<<"Min value: "<<min(root);
+    cout<<endl<<"Max value: "<<max(root);
+
 
     return 0;
 }
