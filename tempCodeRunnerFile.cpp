@@ -1,32 +1,49 @@
 #include <iostream>
-#include <algorithm>
+#include <climits>
+
 using namespace std;
 
-struct Item {
-    int profit, weight;
-    Item(int p, int w) : profit(p), weight(w) {}
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-bool cmp(Item a, Item b) {
-    return (double)a.profit / a.weight > (double)b.profit / b.weight;
-}
-
-double fractionalKnapsack(int W, Item arr[], int N) {
-    sort(arr, arr + N, cmp);
-    double finalValue = 0.0;
-    for (int i = 0; i < N && W > 0; ++i) {
-        
-        int take = min(W, arr[i].weight);
-        finalValue += (double)take / arr[i].weight * arr[i].profit;
-        W -= take;
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        // Helper function for inorder traversal
+        return isValidBSTHelper(root, LONG_MIN, LONG_MAX);
     }
-    return finalValue;
-}
+
+private:
+    bool isValidBSTHelper(TreeNode* node, long min_val, long max_val) {
+        if (node == nullptr)
+            return true;
+        if (node->val <= min_val || node->val >= max_val)
+            return false;
+        return isValidBSTHelper(node->left, min_val, node->val) && isValidBSTHelper(node->right, node->val, max_val);
+    }
+};
 
 int main() {
-    int W = 50;
-    Item arr[] = {{50, 10}, {90, 20}, {100, 30}};
-    int N = 3;
-    std::cout << fractionalKnapsack(W, arr, N);
+    // Example usage
+    TreeNode* root = new TreeNode(2);
+    root->left = new TreeNode(1);
+    root->right = new TreeNode(0);
+    
+    Solution sol;
+    if (sol.isValidBST(root))
+        cout << "The tree is a valid BST." << endl;
+    else
+        cout << "The tree is not a valid BST." << endl;
+    
+    // Clean up memory (not necessary for problem-solving, but good practice)
+    delete root->left;
+    delete root->right;
+    delete root;
+    
     return 0;
 }

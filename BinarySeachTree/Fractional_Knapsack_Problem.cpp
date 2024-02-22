@@ -1,43 +1,52 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-using namespace std;
-
-bool compare(pair <float, int> p1, pair <float, int> p2) {
-	return p1.first > p2.first;
-}
-
-int fractional_knapsack(vector <int> w, vector <int> v, int c) {
-	int len = w.size();
-	int total_value = 0;
-
-	vector <pair <float, int>> ratio(len, make_pair(0.0, 0));
-
-	for(int i = 0; i < len; i++)
-		ratio[i] = make_pair(v[i]/w[i], i);
-
-	sort(ratio.begin(), ratio.end(), compare);
-
-	for(int i = 0; i < len; i++) {
-		if(c == 0)
-			break;
-
-		if(w[ratio[i].second] <= c) {
-            cout<<w[i]<<endl;
-			total_value += v[ratio[i].second];
-			c -= w[ratio[i].second];
-		}
-
-	}
-
-	return total_value;
-}
+#include <stdio.h>
 
 int main() {
-	int n = 3;
-	vector <int> w = {10, 20, 40};
-	vector <int> p = {90,100,300};
-	int given_weight = 180;
-	cout << "The maximum value that can be obtained is: " << fractional_knapsack(w, p, given_weight) << endl;
-	return 0;
+    int A[100][4], i, j, n, total = 0, index, temp;
+    float avg_wt, avg_tat;
+
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    printf("Enter Burst Time:\n");
+    for (i = 0; i < n; i++) {
+        printf("P%d: ", i + 1);
+        scanf("%d", &A[i][1]);
+        A[i][0] = i + 1;
+    }
+
+    for (i = 0; i < n; i++) {
+        index = i;
+        for (j = i + 1; j < n; j++)
+            if (A[j][1] < A[index][1])
+                index = j;
+        temp = A[i][1];
+        A[i][1] = A[index][1];
+        A[index][1] = temp;
+
+        temp = A[i][0];
+        A[i][0] = A[index][0];
+        A[index][0] = temp;
+    }
+
+    A[0][2] = 0;
+    for (i = 1; i < n; i++) {
+        A[i][2] = 0;
+        for (j = 0; j < i; j++)
+            A[i][2] += A[j][1];
+        total += A[i][2];
+    }
+
+    printf("P\tBT\tWT\tTAT\n");
+    for (i = 0; i < n; i++) {
+        A[i][3] = A[i][1] + A[i][2];
+        total += A[i][3];
+        printf("P%d\t%d\t%d\t%d\n", A[i][0], A[i][1], A[i][2], A[i][3]);
+    }
+
+    avg_wt = (float)total / n;
+    avg_tat = (float)total / n;
+    printf("Average Waiting Time= %.2f\n", avg_wt);
+    printf("Average Turnaround Time= %.2f\n", avg_tat);
+
+    return 0;
 }
