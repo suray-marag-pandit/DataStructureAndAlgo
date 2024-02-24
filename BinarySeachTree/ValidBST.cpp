@@ -54,23 +54,18 @@ void takeinput(node *&root)
     }
 }
 
-bool valid(node *root)
+bool valid(node *root,int min,int max)
 {
     if (root == NULL)
         return true;
 
-    if ((root->left->data > root->data) && (root->right->data < root->data))
-    {
-        return false;
+    if(root->data >=min && root->data<=max){
+        bool left = valid(root->left,min,root->data-1);
+        bool right = valid(root->right,root->data+1,max);
+        return (left && right);
     }
-
-    bool leftsub = valid(root->left);
-    bool rightsub = valid(root->right);
-
-    if(leftsub && rightsub)
-        return true;
-
-    return true;
+    else 
+        return false;
 }
 
 void inorder(node *root)
@@ -86,15 +81,19 @@ void inorder(node *root)
 }
 int main(int argc, char const *argv[])
 {
-    node *root = NULL;
+    // node *root = NULL;
 
-    // 10 8 21 7 27 5 4 3 -1
-    cout << "Enter the data";
-    takeinput(root);
+    // // 10 8 21 7 27 5 4 3 -1
+    // cout << "Enter the data: ";
+    // takeinput(root);
 
-    cout << "Inorder traversal of the tree" << endl;
-    inorder(root);
+    // cout << "Inorder traversal of the tree" << endl;
+    // inorder(root);
 
-    cout<<"validity: "<<valid(root);
+    node * root = new node(5);
+    root->right =new node(7); 
+    root->left =  new node(8);
+
+    cout << "validity: " << valid(root,INT_MIN,INT_MAX);
     return 0;
 }
