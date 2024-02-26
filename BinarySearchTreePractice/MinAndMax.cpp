@@ -1,5 +1,5 @@
 #include <iostream>
-#include<queue>
+#include <queue>
 using namespace std;
 
 class node
@@ -51,33 +51,63 @@ void takeinput(node *&root)
     }
 }
 
-void BFS(node * root){
-    queue<node*> q;
+void BFS(node *root)
+{
+    queue<node *> q;
 
     q.push(root);
 
-    while(!q.empty()){
+    while (!q.empty())
+    {
 
-        node * temp =  q.front();
+        node *temp = q.front();
         q.pop();
-        
-        cout<<temp->data<<" ";
 
-        if(temp->left){
+        cout << temp->data << " ";
+
+        if (temp->left)
+        {
             q.push(temp->left);
         }
-        if(temp->right){
+        if (temp->right)
+        {
             q.push(temp->right);
         }
     }
-
 }
+
+int maxInBST(node * root){
+    if(root==NULL)
+        return -1;
+    node * temp =root;
+
+    while (temp->right!=NULL){
+        temp = temp->right;
+    }
+
+    return temp->data;
+}
+
+int minInBST(node * root){
+    if(root==NULL)
+        return -1;
+    node * temp =root;
+
+    while (temp->left!=NULL){
+        temp = temp->left;
+    }
+
+    return temp->data;
+}
+
 int main(int argc, char const *argv[])
 {
-    // 10 8 21 7 27 5 4 3 -1
+    // 10 8 21 7 27 5 4 3 2 30-1
 
-    node * root = NULL;
+    node *root = NULL;
     takeinput(root);
-    BFS(root);
+
+    cout << endl << maxInBST(root);
+    cout << endl << minInBST(root);
     return 0;
 }
