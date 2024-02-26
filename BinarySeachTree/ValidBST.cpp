@@ -88,7 +88,7 @@ int main(int argc, char const *argv[])
     // takeinput(root);
 
     // cout << "Inorder traversal of the tree" << endl;
-    // inorder(root);
+    // inorder(root); 
 
     node * root = new node(5);
     root->right =new node(7); 
