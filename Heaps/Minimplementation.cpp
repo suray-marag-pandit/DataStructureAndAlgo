@@ -1,16 +1,18 @@
 #include <iostream>
-#include<algorithm>
+#include <queue>
+#include <algorithm>
 using namespace std;
 
 class heap
 {
     int arr[100];
-    int size;
-    public:
+    int size = 0;
 
-    heap(){
-        size = 1; // Initialize size to 1
-        arr[size] = -1; // Initialize the first element to -1
+public:
+    heap()
+    {
+        arr[0] = -1;
+        size = 0;
     }
 
     void insert(int val)
@@ -35,27 +37,34 @@ class heap
         }
     }
 
-    void print(){
-        for(int i=1;i<=size;i++)
-        {   
+    void print()
+    {
+        for (int i = 1; i <= size; i++)
+        {
             cout << arr[i] << " ";
         }
-        cout<<endl;
+        cout << endl;
     }
 };
 
 int main(int argc, char const *argv[])
 {
-    heap * h = new heap();
+    heap *h = new heap();
 
-    h->insert(40);
-    h->insert(50);
-    h->insert(60);
-    h->insert(11);
-    h->insert(6);
-    h->insert(12);
+    h->insert(10);
+    h->insert(14);
+    h->insert(19);
+    h->insert(35);
+    h->insert(26);
+    h->insert(31);
+    h->insert(44);
+    h->insert(27);
+    h->insert(42);
+    h->insert(33);
+    h->insert(1);
     h->print();
 
     delete h;
     return 0;
+
 }
