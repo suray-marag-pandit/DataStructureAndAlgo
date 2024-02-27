@@ -29,10 +29,8 @@ public:
             {
                 swap(arr[parent], arr[index]);
                 index = parent;
-            }
-            else
-            {
-                break;
+            }else{
+                return ;
             }
         }
     }
