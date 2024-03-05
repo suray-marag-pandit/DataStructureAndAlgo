@@ -27,7 +27,6 @@ bool solve(vector<vector<int>> &board, int n)
             {
                 for (int number = 1; number <=9; number++)
                 {
-
                     if (isSafe(i, j, number, board, n))
                     {
                         board[i][j] = number;
