@@ -43,8 +43,6 @@ void solve(int x, int y, int n, vector<vector<int>> arr, vector<string> &ans, ve
     visited[x][y] = 0;
 }
 
-// vector<vector<bool>> visited(n, vector<bool>(n,0));
-
 int main()
 {
 
