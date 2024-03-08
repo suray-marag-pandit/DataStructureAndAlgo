@@ -10,14 +10,14 @@ vector<vector<int>> printAdjacency(const int n, int m,vector<pair<int, int>> &ed
         int u = edges[i].first;
         int v = edges[i].second;
         ans[u].push_back(v);
-        ans[v].push_back(u); // Added the missing semicolon
+        ans[v].push_back(u); 
     }
 
     vector<vector<int>> adj(n);
     for (int i = 0; i < n; i++) {
-        adj[i].push_back(i); // This is redundant
+        adj[i].push_back(i); 
         for (int j = 0; j < ans[i].size(); j++) {
-            adj[i].push_back(ans[i][j]); // Corrected the index from j to i
+            adj[i].push_back(ans[i][j]); 
         }
     }
 
