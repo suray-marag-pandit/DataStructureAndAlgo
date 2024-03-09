@@ -58,7 +58,7 @@ bool cycleDetection(int n, vector<pair<int, int>> edges)
     return false;
 }
 int main(int argc, char const *argv[])
-// {
+{
 //     int N = 6; // Number of nodes
 //     vector<pair<int, int>> edges = {{0, 4},
 //                                     {4, 2},
