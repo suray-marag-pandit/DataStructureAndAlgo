@@ -5,34 +5,21 @@
 #include <unordered_map>
 using namespace std;
 
-bool isCycle(int n, unordered_map<int, list<int>> adj, vector<pair<int, bool>> &visited)
+bool isCycle(int n,int parent, unordered_map<int, list<int>>& adj, vector<pair<int, bool>> &visited)
 {
-    unordered_map<int, int> parent;
-
-    parent[n] = -1;
     visited[n].second = true;
-
-    stack<int> q;
-
-    q.push(n);
-
-    while (!q.empty())
-    {
-        int temp = q.top();
-        q.pop();
-
-        for (auto neighbour : adj[temp])
+        for (auto neighbour : adj[n])
         {
-            if (visited[neighbour].second == true && neighbour != parent[temp])
-                return true;
-            else if (!visited[neighbour].second)
+            if (!visited[neighbour].second ){
+                bool ans = isCycle(neighbour,n,adj,visited);
+                if(ans)
+                    return true;
+            }
+            else if (neighbour!=parent)
             {
-                q.push(neighbour);
-                visited[neighbour].second = true;
-                parent[neighbour] = temp;
+                return true;
             }
         }
-    }
     return false;
 }
 bool cycleDetection(int n, vector<pair<int, int>> edges)
@@ -52,7 +39,7 @@ bool cycleDetection(int n, vector<pair<int, int>> edges)
     {
         if (!visited[i].second)
         {
-            bool ans = isCycle(n, adj, visited);
+            bool ans = isCycle(n,-1, adj, visited);
             if (ans)
                 return true;
         }
@@ -61,18 +48,18 @@ bool cycleDetection(int n, vector<pair<int, int>> edges)
 }
 int main(int argc, char const *argv[])
 {
-    int N = 6; // Number of nodes
-    vector<pair<int, int>> edges = {{0, 4},
-                                    {4, 2},
-                                    {2, 3},
-                                    {3, 5},
-                                    {5, 1},
-                                    {1, 4}};
-    // Edges represented as pairs of (source, destination)
-    // int N = 3;
-    // vector<pair<int, int>> edges = {{1, 2},
+    // int N = 6; // Number of nodes
+    // vector<pair<int, int>> edges = {{0, 4},
+    //                                 {4, 2},
     //                                 {2, 3},
-    //                                 {3, 1}};
+    //                                 {3, 5},
+    //                                 {5, 1},
+    //                                 {1, 4}};
+    // Edges represented as pairs of (source, destination)
+    int N = 3;
+    vector<pair<int, int>> edges = {{1, 2},
+                                    {2, 3},
+                                    {3, 1}};
                                 
     bool ans = cycleDetection(N, edges);
     cout << ans;
