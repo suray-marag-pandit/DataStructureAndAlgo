@@ -3,7 +3,8 @@
         "queue": "cpp",
         "iostream": "cpp",
         "vector": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "unordered_map": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
