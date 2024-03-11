@@ -1,60 +1,67 @@
 #include <iostream>
 #include <unordered_map>
 #include <list>
+#include <queue>
+#include <vector>
 using namespace std;
 
-class graph
+void Kahn(int N, vector<pair<int, int>> edges, unordered_map<int, list<int>> adj, vector<int> &indegree)
 {
-public:
-    unordered_map<int, list<int>> adj;
+  queue<int> q;
+  for (int i = 0; i < indegree.size(); i++)
+  {
+    if (indegree[i] == 0)
+      q.push(i);
+  }
 
-    void addEdge(int u, int v, bool direction)
-    {
-        // direction = 0 -> undirected;
-        // direction = 1 -> directed;
+  while (!q.empty()) {
+    int temp = q.front();
+    q.pop();
+    cout << temp << " ";
 
-        // create an edge
-        adj[u].push_back(v);
-
-        if (direction == 0)
-        {
-            adj[v].push_back(u);
-        }
+    for(auto i : adj[temp]){
+        indegree[i]--;
+        if (indegree[i] == 0)
+          q.push(i);
     }
+  }
+}
 
-    void print()
-    {
-        for (auto &&i : adj)
-        {
-            cout << i.first << "->";
-            for (auto j : i.second)
-            {
-                cout << j << ",";
-            }
-            cout << endl;
-        }
-    }
-};
+void Sort(int N, vector<pair<int, int>> edges)
+{
+
+  unordered_map<int, list<int>> adj;
+  for (auto edge : edges)
+  {
+    adj[edge.first].push_back(edge.second);
+  }
+
+  vector<int> indegree(N);
+
+  for (int i = 0; i < edges.size(); i++)
+  {
+    indegree[edges[i].second]++;
+  }
+
+  Kahn(N,edges,adj,indegree);
+  // for (auto i : indegree)
+  // {
+  //   cout << i << endl;
+  // }
+}
 
 int main(int argc, char const *argv[])
 {
-    int n;
-    cout << "Enter the number of nodes ";
-    cin >> n;
-    int m;
-    cout << "Enter the number of edges ";
-    cin >> m;
+  int N = 6;
+  vector<pair<int, int>> edges = {
+      {2, 3},
+      {3, 1},
+      {4, 0},
+      {4, 1},
+      {5, 0},
+      {5, 2},
+  };
 
-    graph g;
-
-    for (int i = 0; i < m; i++)
-    {
-        int u, v;
-        cin >> u >> v;
-        g.addEdge(u, v, 0);
-    }
-
-    g.print();
-
-    return 0;
+  Sort(N, edges);
+  return 0;
 }
