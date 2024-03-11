@@ -11,24 +11,26 @@ void Kahn(int N, vector<pair<int, int>> edges, unordered_map<int, list<int>> adj
     for (int i = 0; i < indegree.size(); i++)
     {
         if (indegree[i] == 0)
-        q.push(i);
+            q.push(i);
     }
 
-    int count=0;
-    while (!q.empty()) {
+    int count = 0;
+    while (!q.empty())
+    {
         int temp = q.front();
         q.pop();
         count++;
-        for(auto i : adj[temp]){
+        for (auto i : adj[temp])
+        {
             indegree[i]--;
             if (indegree[i] == 0)
-            q.push(i);
+                q.push(i);
         }
     }
-    if(count==N)
-        cout<<false;
+    if (count == N)
+        cout << false;
     else
-        cout<<true;
+        cout << true;
 }
 
 void Sort(int N, vector<pair<int, int>> edges)
@@ -47,7 +49,7 @@ void Sort(int N, vector<pair<int, int>> edges)
         indegree[edges[i].second]++;
     }
 
-    Kahn(N,edges,adj,indegree);
+    Kahn(N, edges, adj, indegree);
     // for (auto i : indegree)
     // {
     //   cout << i << endl;
@@ -65,9 +67,9 @@ int main(int argc, char const *argv[])
         {5, 0},
         {5, 2},
         {1, 5},
-        
+
     };
 
-Sort(N, edges);
-return 0;
+    Sort(N, edges);
+    return 0;
 }
