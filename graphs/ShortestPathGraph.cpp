@@ -8,9 +8,9 @@ using namespace std;
 
 void parentF(int N, vector<pair<int, int>> edges, vector<int> &parent, vector<bool> &visited, unordered_map<int, list<int>> adj)
 {
-    visited[N] = true;
     queue<int> track;
     track.push(N);
+    visited[N] = true;
 
     while (!track.empty())
     {
@@ -44,13 +44,16 @@ void path(int N, int s, int d, vector<pair<int, int>> edges)
     vector<int> parent(N + 1);
 
     // first element
-    parent[edges[0].first] = -1;
+    parent[s] = -1;
+
+    // call for parent implementation
     parentF(s, edges, parent, visited, adj);
 
+    // ans output
     int i = d;
     while (i != s)
     {
-        cout << i << "->";
+        cout << i << "<-";
         i = parent[i];
     }
     cout << i;
@@ -70,6 +73,6 @@ int main(int argc, char const *argv[])
         {5, 8},
     };
 
-    path(N, 1, 1, edges);
+    path(N, 1, 8, edges);
     return 0;
 }
