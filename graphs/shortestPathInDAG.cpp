@@ -1,63 +1,77 @@
 #include <iostream>
 #include <stack>
 #include <vector>
-#include<list>
+#include <list>
 #include <unordered_map>
 using namespace std;
 
-
-void dfs(int N, vector<pair<int, int>> edges, stack<int> &ans, unordered_map<int, bool> &visited, unordered_map<int, list<int>> adj)
+class graph
 {
-    visited[N] = true;
+public:
+    unordered_map<int, list<pair<int, int>>> adj;
 
-    for (auto i : adj[N])
+    void addEdge(int u, int v, int weight)
     {
-        if (!visited[i])
-        {  
-            dfs(i, edges, ans, visited, adj);
-        }
+        adj[u].push_back(make_pair(v, weight));
     }
 
-    ans.push(N); 
-}
-
-void topologicalSort(int N, vector<pair<int, int>> edges, stack<int> &ans)
-{
-    unordered_map<int, list<int>> adj;
-    for (int i = 0; i < edges.size(); i++)
+    void print()
     {
-        adj[edges[i].first].push_back(edges[i].second);
-    }
 
-    unordered_map<int, bool> visited;
-    for (int i = 0; i < N; i++)
-    {
-        if (!visited[i])
+        for (auto i : adj)
         {
-            dfs(i, edges, ans, visited, adj);
+            cout << i.first << " = ";
+            for (auto j : adj[i.first])
+            {
+                cout << "(" << j.first << "," << j.second << "),";
+            }
+            cout << endl;
         }
     }
-}
+    
+
+    
+    void dfs(int N, stack<int> &ans, unordered_map<int,bool> visited)
+    {
+        visited[N] = true;
+
+        for (auto i : adj[N])
+        {
+            if (!visited[i.first])
+            {  
+                dfs(i.first,ans, visited);
+            }
+        }
+
+        ans.push(N); 
+    }
+};
+
 int main(int argc, char const *argv[])
 {
-    int N = 6;
-    vector<pair<int, int>> edges = {
-        {1, 2},
-        {1, 3},
-        {2, 4},
-        {3, 4},
-        {4, 5},
-        {4, 6},
-        {5, 6},
-    };
+    graph g;
 
+    g.addEdge(0, 1, 5);
+    g.addEdge(0, 2, 3);
+    g.addEdge(1, 2, 2);
+    g.addEdge(1, 3, 6);
+    g.addEdge(2, 3, 7);
+    g.addEdge(2, 4, 4);
+    g.addEdge(2, 5, 2);
+    g.addEdge(3, 4, -1);
+    g.addEdge(4, 5, -2);
+
+    g.print();
+
+    int n = 6;
+    unordered_map<int,bool> visited;
     stack<int> ans;
-
-    topologicalSort(N, edges, ans);
-    while(!ans.empty()){
-        cout<<ans.top()<<" ";
-        ans.pop();
+    for (int i = 0; i < n; i++)
+    {
+        if(visited[i])
+            g.dfs(i,ans,visited);
     }
+    
 
     return 0;
 }
