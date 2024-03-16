@@ -6,10 +6,9 @@ int sumOfArray(int arr[],int size){
         return 0;
     if(size==1)
         return arr[0];
-    else{ 
-        int value = sumOfArray(arr+1,size-1);
-        return (arr[0]+ value);
-    }
+    
+
+    return arr[0] + sumOfArray(arr+1,size-1);
 }
 
 int main(){
