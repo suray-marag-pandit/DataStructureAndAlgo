@@ -13,7 +13,7 @@ int denomination(vector<int> arr,int x){
     int mini = INT_MAX;
     
     for(int i = 0; i < arr.size(); i++){
-        int ans = denomination(arr,x-arr[i]);
+        int ans = denomination(arr,x - arr[i]);
         if(ans!=INT_MAX)
             mini = min(ans+1,mini);
     }
