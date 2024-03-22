@@ -55,6 +55,7 @@ vector<int> Zig(node *root)
 
     bool flag = true;
 
+
     while (!q.empty())
     {
         int size = q.size();
