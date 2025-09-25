@@ -1,0 +1,43 @@
+/*
+Concept of this solution: "Minimum Time to Visit All Points"
+
+1. Problem:
+   - You are given a list of points on a 2D grid.
+   - You start at the first point and want to visit all points in order.
+   - You can move in 8 directions:
+     * Horizontally: left/right
+     * Vertically: up/down
+     * Diagonally: top-left, top-right, bottom-left, bottom-right
+   - Moving from one cell to an adjacent cell (any direction) takes 1 second.
+   - Goal: Find the minimum time to visit all points.
+
+2. Observation:
+   - When moving from one point `(x1, y1)` to another `(x2, y2)`:
+     * You can move diagonally as much as possible, reducing both x and y differences simultaneously.
+     * Once one coordinate matches, move straight along the remaining coordinate.
+   - Therefore, the **minimum time** to move between two points is:
+     `max(abs(x2 - x1), abs(y2 - y1))`
+
+3. Approach in the code:
+   - Initialize a counter `count` to 0.
+   - Loop through each consecutive pair of points `(points[i], points[i+1])`:
+     1. Calculate the absolute difference along x-axis: `dx = abs(x2 - x1)`
+     2. Calculate the absolute difference along y-axis: `dy = abs(y2 - y1)`
+     3. Add `max(dx, dy)` to `count`, which is the minimum time to move from `points[i]` to `points[i+1]`.
+   - After the loop, `count` will hold the total minimum time to visit all points.
+
+4. Example:
+   Input: points = [[1,1],[3,4],[6,1]]
+   - Move from [1,1] to [3,4]:
+     * dx = 2, dy = 3 → max(2,3) = 3 seconds
+   - Move from [3,4] to [6,1]:
+     * dx = 3, dy = 3 → max(3,3) = 3 seconds
+   - Total minimum time = 3 + 3 = 6
+
+5. Key advantage:
+   - This approach avoids simulating each step individually.
+   - It is **simpler, faster, and correct** for all cases.
+
+Time Complexity: O(n), where n = number of points
+Space Complexity: O(1)
+*/

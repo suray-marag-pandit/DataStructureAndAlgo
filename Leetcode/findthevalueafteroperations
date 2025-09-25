@@ -1,0 +1,6 @@
+given an string of + and - example = "++--++-+-++-+"
+return  the net result after performing all operations
+++--++-+-++-+
+output = 4
+Explanation:
++1 +1 -1 -1 +1 +1 -1 +1 -1 +1 +1 -1 +1 = 4
