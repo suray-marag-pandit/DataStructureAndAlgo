@@ -13,6 +13,14 @@ int main(){
 
     printArray(arr,10);
     cout<<arr[0]<<endl;
-    cout<<sizeof(arr)/sizeof(int)<<endl;
     return 0;
 }
+
+// | Algorithm      | Stable? | In-Place? |
+// | -------------- | ------- | --------- |
+// | Bubble Sort    | ✅ Yes   | ✅ Yes     |
+// | Insertion Sort | ✅ Yes   | ✅ Yes     |
+// | Merge Sort     | ✅ Yes   | ❌ No      |
+// | Quick Sort     | ❌ No    | ✅ Yes     |
+// | Heap Sort      | ❌ No    | ✅ Yes     |
+// | Selection Sort | ❌ No    | ✅ Yes     |
