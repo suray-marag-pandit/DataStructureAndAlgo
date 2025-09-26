@@ -1,20 +1,23 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 // ----------------------
 // Node Class Definition
 // ----------------------
-class Node {
+class Node
+{
 public:
     int data;
     Node *next;
 
-    Node(int data) {
+    Node(int data)
+    {
         this->data = data;
         this->next = NULL;
     }
 
-    ~Node() {
+    ~Node()
+    {
         cout << "Memory freed for node with data: " << data << endl;
     }
 };
@@ -22,8 +25,10 @@ public:
 // ----------------------
 // Insert at Head
 // ----------------------
-void insertionAtHead(Node* &head, Node* &tail, int data) {
-    if (head == NULL) {
+void insertionAtHead(Node *&head, Node *&tail, int data)
+{
+    if (head == NULL)
+    {
         head = new Node(data);
         tail = head;
         return;
@@ -36,8 +41,10 @@ void insertionAtHead(Node* &head, Node* &tail, int data) {
 // ----------------------
 // Insert at Tail
 // ----------------------
-void insertionAtTail(Node* &head, Node* &tail, int data) {
-    if (head == NULL) {
+void insertionAtTail(Node *&head, Node *&tail, int data)
+{
+    if (head == NULL)
+    {
         head = new Node(data);
         tail = head;
         return;
@@ -50,13 +57,16 @@ void insertionAtTail(Node* &head, Node* &tail, int data) {
 // ----------------------
 // Insert at Position
 // ----------------------
-void insertionAtPosition(Node* &head, Node* &tail, int position, int data) {
-    if (position == 1) {
+void insertionAtPosition(Node *&head, Node *&tail, int position, int data)
+{
+    if (position == 1)
+    {
         insertionAtHead(head, tail, data);
         return;
     }
 
-    if (head == NULL && tail == NULL) {
+    if (head == NULL && tail == NULL)
+    {
         head = new Node(data);
         tail = head;
         return;
@@ -65,12 +75,14 @@ void insertionAtPosition(Node* &head, Node* &tail, int position, int data) {
     Node *pos = head;
     position = position - 2; // Move one position behind target
 
-    while (position && pos->next != NULL) {
+    while (position && pos->next != NULL)
+    {
         pos = pos->next;
         position--;
     }
 
-    if (pos->next == NULL) {
+    if (pos->next == NULL)
+    {
         insertionAtTail(head, tail, data);
         return;
     }
@@ -83,20 +95,24 @@ void insertionAtPosition(Node* &head, Node* &tail, int position, int data) {
 // ----------------------
 // Delete Node
 // ----------------------
-void deleteNode(Node* &head, Node* &tail, int position) {
+void deleteNode(Node *&head, Node *&tail, int position)
+{
     // Case 0: Empty list
-    if (head == NULL) {
+    if (head == NULL)
+    {
         cout << "List is empty. Nothing to delete.\n";
         return;
     }
 
     // Case 1: Delete head
-    if (position == 1) {
+    if (position == 1)
+    {
         Node *temp = head;
         head = head->next;
 
         // If list becomes empty after deletion
-        if (head == NULL) {
+        if (head == NULL)
+        {
             tail = NULL;
         }
 
@@ -109,20 +125,23 @@ void deleteNode(Node* &head, Node* &tail, int position) {
     Node *curr = head->next;
     int count = 2;
 
-    while (curr != NULL && count < position) {
+    while (curr != NULL && count < position)
+    {
         prev = curr;
         curr = curr->next;
         count++;
     }
 
     // If position is greater than length
-    if (curr == NULL) {
+    if (curr == NULL)
+    {
         cout << "Position out of range. No deletion performed.\n";
         return;
     }
 
     // If deleting last node, update tail
-    if (curr->next == NULL) {
+    if (curr->next == NULL)
+    {
         tail = prev;
     }
 
@@ -130,41 +149,72 @@ void deleteNode(Node* &head, Node* &tail, int position) {
     delete curr;
 }
 
-//reversing the linkedlist
+// reversing the linkedlist
 
-void reverseLinkedList(Node *&head,Node *&tail){
-    Node * prev = NULL;
-    Node * current = head;
+void reverseLinkedList(Node *&head, Node *&tail)
+{
+    Node *prev = NULL;
+    Node *current = head;
     tail = head;
 
-    while(current){
-        head=head->next;
+    while (current)
+    {
+        head = head->next;
         current->next = prev;
 
         prev = current;
-        current=head;
+        current = head;
         // delete temp;
     }
     head = prev;
 }
 
-//recursive reverse ll
+// recursive reverse ll
 
-void reverseLinkedListRecursive(Node *&head,Node *&tail,int prev){
-    if(head ==null){
+void reverseLinkedListRecursive(Node *&head, Node *&tail, Node *prev, Node *current)
+{
+    if (current == NULL)
+    {
         head = prev;
         return;
     }
-    
-    reverseLinkedListRecursive(head->next,tail,)
+
+    reverseLinkedListRecursive(head, tail, current, current->next);
+    current->next = prev;
+    tail = current;
+
+    // Node *curr = NULL;
+
+    // while (head != NULL)
+    // {
+    //     curr = head->next;
+    //     head->next = prev;
+    //     prev = head;
+    //     head =curr;
+    // }
+    // head = prev;
+}
+
+//one more recursive approach 
+Node *  reverse(Node * head){
+    if(head->next ==NULL || head == NULL)
+        return head;
+
+    Node * temp = reverse(head->next);
+    temp->next = head;
+    return head;
+
+
 }
 
 // ----------------------
 // Print Linked List
 // ----------------------
-void printLL(Node *head) {
+void printLL(Node *head)
+{
     cout << "\nLinked List: ";
-    while (head != NULL) {
+    while (head != NULL)
+    {
         cout << head->data << " ";
         head = head->next;
     }
@@ -174,7 +224,8 @@ void printLL(Node *head) {
 // ----------------------
 // Main Function
 // ----------------------
-int main() {
+int main()
+{
     Node *linkedlist = new Node(10);
     Node *tail = linkedlist;
 
@@ -194,36 +245,37 @@ int main() {
     insertionAtPosition(linkedlist, tail, 10, 300); // Tail
 
     printLL(linkedlist);
-    
-    cout<<"reverseLinkedList"<<endl;
-    reverseLinkedList(linkedlist,tail);
-    
+
+    cout << "reverseLinkedList" << endl;
+
+    Node *pointer = NULL;
+    // reverseLinkedListRecursive(linkedlist, tail, pointer, linkedlist);
+
+    reverse(linkedlist);
     printLL(linkedlist);
+
+    cout << tail->data << endl;
 
     // ------------------
     // Deletion Examples
-    // ------------------
-    cout << "\nDeleting head (position 1)" << endl;
-    deleteNode(linkedlist, tail, 1);
-    printLL(linkedlist);
+    // // ------------------
+    // cout << "\nDeleting head (position 1)" << endl;
+    // deleteNode(linkedlist, tail, 1);
+    // printLL(linkedlist);
 
-    cout << "\nDeleting last node" << endl;
-    deleteNode(linkedlist, tail, 9); // dynamically calculated
-    printLL(linkedlist);
+    // cout << "\nDeleting last node" << endl;
+    // deleteNode(linkedlist, tail, 9); // dynamically calculated
+    // printLL(linkedlist);
 
-    cout << "\nDeleting node at position 4" << endl;
-    deleteNode(linkedlist, tail, 4);
-    printLL(linkedlist);
+    // cout << "\nDeleting node at position 4" << endl;
+    // deleteNode(linkedlist, tail, 4);
+    // printLL(linkedlist);
 
-    cout << "\nDeleting invalid position" << endl;
-    deleteNode(linkedlist, tail, 20);
+    // cout << "\nDeleting invalid position" << endl;
+    // deleteNode(linkedlist, tail, 20);
 
     return 0;
 }
-
-
-
-
 
 // #include<iostream>
 // using namespace std;
@@ -237,8 +289,6 @@ int main() {
 //         this->data = data;
 //         this->next = NULL;
 //     }
-
-
 
 // };
 
@@ -262,7 +312,7 @@ int main() {
 //     }
 //     Node * temp = new Node(data);
 //     tail->next = temp;
-//     tail = temp; 
+//     tail = temp;
 
 // }
 
@@ -281,12 +331,12 @@ int main() {
 
 //     Node * pos = head;
 //     position = position-2;
-    
+
 //     while(position){
 //         pos = pos->next;
 //         position--;
 //     }
-    
+
 //     if(pos->next==NULL){
 //         insertionAtTail(head,tail,data);
 //         return;
@@ -324,6 +374,6 @@ int main() {
 //     insertionAtPosition(linkedlist,tail,6,100);
 
 //     insertionAtPosition(linkedlist,tail,13,99);
-//     printLL(linkedlist);    
+//     printLL(linkedlist);
 //     return 0;
 // }

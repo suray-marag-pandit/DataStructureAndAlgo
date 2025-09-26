@@ -1,0 +1,197 @@
+#include <iostream>
+#include <string>
+#include <cstring> // For strlen and strcpy
+#include <stddef.h> 
+
+using namespace std;
+
+
+// Class definition: Blueprint for a Student object
+class Student {
+
+    // --- Private Access Specifier ---
+    private:
+        int id = 123456789; 
+        
+    // --- Protected Access Specifier ---
+    protected:
+        string class_teacher = "Ms. Sharma"; 
+
+    // --- Public Access Specifier ---
+    public:
+        int rollNo;
+        char* name; 
+        int name_length; 
+        
+        
+        // --- Static Data Member ---
+        // This variable is shared by ALL objects of the Student class.
+        static int student_count;
+
+
+        // --- 1. DEFAULT/PARAMETERIZED CONSTRUCTOR (Using Initialization List) ---
+        // Initialization List is used for rollNo and name_length before the body executes.
+        Student(const char* studentName = "Unassigned", int roll = 1) 
+            : rollNo(roll), 
+              name_length(strlen(studentName)) 
+        { 
+            
+            // Allocate new memory on the heap for the name (Deep Copy preparation)
+            this->name = new char[this->name_length + 1];
+            strcpy(this->name, studentName);
+            
+            // Increment the static counter for every new object created
+            student_count++; 
+
+            cout << "Constructor (Default/Parametrized) called for: " << this->name 
+                 << " | Total: " << student_count << endl;
+        }
+
+
+        // --- 2. DEEP COPY CONSTRUCTOR (User-Defined, Using Initialization List) ---
+        // This prevents the dangerous "Shallow Copy" problem for heap-allocated members.
+        Student(const Student& source) 
+            : id(source.id), 
+              rollNo(source.rollNo), 
+              class_teacher(source.class_teacher), 
+              name_length(source.name_length) 
+        {
+            cout << "Copy Constructor (Deep Copy) called for: " << source.name 
+                 << " | Total: " << student_count + 1 << endl;
+            
+            // Deep Copy logic for pointer member 'name': Allocate NEW, SEPARATE memory.
+            this->name = new char[this->name_length + 1];
+            strcpy(this->name, source.name); 
+            
+            // Increment the static counter for every copy made
+            student_count++; 
+        }
+
+
+        // --- 3. DESTRUCTOR ---
+        // Manually frees the heap memory allocated by the constructor/copy constructor.
+        ~Student() {
+            cout << "Destructor called for: " << this->name 
+                 << " (Freeing memory at " << (void*)this->name << ")";
+            
+            delete[] this->name; // Deallocate memory for the name
+            
+            // Decrement the static counter when an object is destroyed
+            student_count--;
+            
+            cout << " | Remaining: " << student_count << endl;
+        }
+        
+        
+        // --- Static Method ---
+        // Accesses the static data member without needing an object instance.
+        static int getStudentCount() {
+            return student_count;
+        }
+
+
+        // --- Setter Method (to modify private data) ---
+        void setId(int newId) {
+            if (newId > 0) {
+                this->id = newId;
+            } else {
+                cout << "Error: ID must be positive." << endl;
+            }
+        }
+        
+        
+        // Setter for Name (requires re-allocation)
+        void setName(const char* newName) {
+            
+            // Free old memory first to prevent leak
+            delete[] this->name; 
+            
+            this->name_length = strlen(newName);
+            this->name = new char[this->name_length + 1];
+            strcpy(this->name, newName);
+            
+            cout << "Name updated to: " << this->name << endl;
+        }
+        
+        
+        // --- Getter Method (to read private data) ---
+        int getId() const {
+            return this->id;
+        }
+
+        
+        // Method to display all properties
+        void display() const {
+            cout << "  Name: " << this->name 
+                 << " (Heap Address: " << (void*)this->name << ")" << endl;
+                 
+            cout << "  Roll No: " << this->rollNo << endl;
+            cout << "  Private ID (via Getter): " << this->id << endl;
+            cout << "  Class Teacher (Protected): " << class_teacher << endl;
+        }
+};
+
+
+// --- Initialization of the Static Data Member ---
+// Must be done outside the class definition in the global scope.
+int Student::student_count = 0;
+
+
+int main() {
+    cout << "\n============================================" << endl;
+    cout << "           PHASE 1: OBJECT CREATION" << endl;
+    cout << "============================================" << endl;
+    
+    // Demonstrate accessing the static method before any object is created
+    cout << "Initial Student Count (via Static Method): " << Student::getStudentCount() << endl;
+
+    // 1. Static Allocation (Calls Default Constructor)
+    Student s1("Oliver", 10);
+    
+    // Direct access to the static property
+    cout << "Current Student Count (via Static Property): " << Student::student_count << endl; 
+
+    // 2. Deep Copy (Calls Custom Copy Constructor)
+    // Note: s2's name points to entirely different memory than s1's name.
+    Student s2 = s1; 
+
+    // 3. Dynamic Allocation (Calls Default Constructor)
+    Student* s_dynamic = new Student("Zachary", 50);
+    s_dynamic->setId(777);
+    
+    // Check total count
+    cout << "\n--------------------------------------------" << endl;
+    cout << "Total active students: " << Student::getStudentCount() << endl;
+    cout << "--------------------------------------------" << endl;
+
+
+    cout << "\n============================================" << endl;
+    cout << "           PHASE 2: DEEP COPY CHECK" << endl;
+    cout << "============================================" << endl;
+    
+    // Changing s1's name (Deep Copy ensures s2 is unaffected)
+    s1.setName("Alice");
+
+    cout << "\n--- S1 Data After Change ---" << endl;
+    s1.display();
+    
+    cout << "\n--- S2 Data (Unaffected Copy) ---" << endl;
+    s2.display();
+    
+    cout << "\n--- Dynamic Object Data ---" << endl;
+    s_dynamic->display();
+    
+
+    cout << "\n============================================" << endl;
+    cout << "           PHASE 3: DESTRUCTION" << endl;
+    cout << "============================================" << endl;
+
+    // --- Cleanup for Dynamic Allocation (Calls Destructor Manually) ---
+    // The Destructor is called, and the student_count is decremented.
+    delete s_dynamic; 
+    
+    // s2's Destructor will be called here (for Oliver)
+    // s1's Destructor will be called here (for Alice)
+
+    return 0; // Static objects s2 and s1 automatically destroyed here
+}
