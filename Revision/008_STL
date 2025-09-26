@@ -1,0 +1,230 @@
+## **STL_Reference.cpp**
+
+```cpp
+#include <iostream>
+#include <array>
+#include <vector>
+#include <deque>
+#include <list>
+#include <stack>
+#include <queue>
+#include <set>
+#include <map>
+#include <algorithm>
+#include <functional> // For greater<>
+using namespace std;
+
+int main() {
+    cout << "==== C++ STL Quick Reference ====\n\n";
+
+    /*--------------------------------------------------
+    1. ARRAY (Fixed size)
+    --------------------------------------------------*/
+    cout << "1. ARRAY\n";
+    array<int, 5> arr = {1, 2, 3, 4, 5};
+    cout << "Array elements: ";
+    for (int i : arr) cout << i << " ";
+    cout << "\nSize: " << arr.size() << ", Front: " << arr.front() << ", Back: " << arr.back() << "\n\n";
+
+
+    /*--------------------------------------------------
+    2. VECTOR (Dynamic array)
+    --------------------------------------------------*/
+    cout << "2. VECTOR\n";
+    vector<int> v = {10, 20, 30};
+    v.push_back(40);
+    cout << "Vector elements: ";
+    for (int i : v) cout << i << " ";
+    v.pop_back();
+    cout << "\nAfter pop_back: ";
+    for (int i : v) cout << i << " ";
+    cout << "\nSize: " << v.size() << ", Capacity: " << v.capacity() << "\n\n";
+
+
+    /*--------------------------------------------------
+    3. DEQUE (Double-ended queue)
+    --------------------------------------------------*/
+    cout << "3. DEQUE\n";
+    deque<int> dq;
+    dq.push_back(1);
+    dq.push_front(2);
+    cout << "Deque elements: ";
+    for (int i : dq) cout << i << " ";
+    dq.pop_back();
+    cout << "\nAfter pop_back: ";
+    for (int i : dq) cout << i << " ";
+    cout << "\n\n";
+
+
+    /*--------------------------------------------------
+    4. LIST (Doubly linked list)
+    --------------------------------------------------*/
+    cout << "4. LIST\n";
+    list<int> lst = {1, 2, 3};
+    lst.push_back(4);
+    lst.push_front(0);
+    cout << "List elements: ";
+    for (int i : lst) cout << i << " ";
+    lst.remove(2); // remove all occurrences of 2
+    cout << "\nAfter removing 2: ";
+    for (int i : lst) cout << i << " ";
+    cout << "\n\n";
+
+
+    /*--------------------------------------------------
+    5. STACK (LIFO)
+    --------------------------------------------------*/
+    cout << "5. STACK\n";
+    stack<int> st;
+    st.push(10);
+    st.push(20);
+    cout << "Top element: " << st.top() << "\n";
+    st.pop();
+    cout << "After pop, Top: " << st.top() << "\n\n";
+
+
+    /*--------------------------------------------------
+    6. QUEUE (FIFO)
+    --------------------------------------------------*/
+    cout << "6. QUEUE\n";
+    queue<int> q;
+    q.push(1);
+    q.push(2);
+    cout << "Front: " << q.front() << ", Back: " << q.back() << "\n";
+    q.pop();
+    cout << "After pop, Front: " << q.front() << "\n\n";
+
+
+    /*--------------------------------------------------
+    7. PRIORITY QUEUE (Max Heap by default)
+    --------------------------------------------------*/
+    cout << "7. PRIORITY QUEUE\n";
+    priority_queue<int> pq;
+    pq.push(3);
+    pq.push(5);
+    pq.push(1);
+    cout << "Max-Heap elements: ";
+    while (!pq.empty()) {
+        cout << pq.top() << " ";
+        pq.pop();
+    }
+    cout << "\n";
+
+    // Min Heap
+    priority_queue<int, vector<int>, greater<int>> minHeap;
+    minHeap.push(3);
+    minHeap.push(5);
+    minHeap.push(1);
+    cout << "Min-Heap elements: ";
+    while (!minHeap.empty()) {
+        cout << minHeap.top() << " ";
+        minHeap.pop();
+    }
+    cout << "\n\n";
+
+
+    /*--------------------------------------------------
+    8. SET (Unique sorted elements)
+    --------------------------------------------------*/
+    cout << "8. SET\n";
+    set<int> s = {5, 1, 2, 2, 3};
+    cout << "Set elements: ";
+    for (int i : s) cout << i << " ";
+    cout << "\nFind 3: " << (s.find(3) != s.end() ? "Found" : "Not Found") << "\n\n";
+
+    // Convert set to vector
+    vector<int> sVec(s.begin(), s.end());
+    cout << "Set converted to Vector: ";
+    for (int i : sVec) cout << i << " ";
+    cout << "\n\n";
+
+
+    /*--------------------------------------------------
+    9. MAP (Key-Value pairs, unique keys)
+    --------------------------------------------------*/
+    cout << "9. MAP\n";
+    map<int, string> mp;
+    mp[1] = "One";
+    mp[2] = "Two";
+    mp.insert({3, "Three"});
+    cout << "Map elements:\n";
+    for (auto &p : mp) {
+        cout << p.first << " -> " << p.second << "\n";
+    }
+    cout << "Find key 2: " << (mp.find(2) != mp.end() ? "Found" : "Not Found") << "\n\n";
+
+
+    /*--------------------------------------------------
+    10. ALGORITHMS
+    --------------------------------------------------*/
+    cout << "10. ALGORITHMS\n";
+    vector<int> algoVec = {4, 2, 5, 3, 1};
+    cout << "Original vector: ";
+    for (int i : algoVec) cout << i << " ";
+
+    sort(algoVec.begin(), algoVec.end());
+    cout << "\nSorted ascending: ";
+    for (int i : algoVec) cout << i << " ";
+
+    sort(algoVec.begin(), algoVec.end(), greater<int>());
+    cout << "\nSorted descending: ";
+    for (int i : algoVec) cout << i << " ";
+
+    cout << "\nBinary search for 3: " 
+         << (binary_search(algoVec.begin(), algoVec.end(), 3) ? "Found" : "Not Found") << "\n";
+
+    reverse(algoVec.begin(), algoVec.end());
+    cout << "Reversed: ";
+    for (int i : algoVec) cout << i << " ";
+    cout << "\n";
+
+    int sum = accumulate(algoVec.begin(), algoVec.end(), 0);
+    cout << "Sum of elements: " << sum << "\n\n";
+
+
+    /*--------------------------------------------------
+    END
+    --------------------------------------------------*/
+    cout << "==== END OF STL QUICK REFERENCE ====\n";
+    return 0;
+}
+```
+
+---
+
+## **How This File Helps**
+
+| STL Component      | Covered Features                                               |
+| ------------------ | -------------------------------------------------------------- |
+| **Array**          | `.size()`, `.front()`, `.back()`, range-based for loop         |
+| **Vector**         | `.push_back()`, `.pop_back()`, `.size()`, `.capacity()`        |
+| **Deque**          | `.push_front()`, `.push_back()`, `.pop_front()`, `.pop_back()` |
+| **List**           | `.push_front()`, `.push_back()`, `.remove()`                   |
+| **Stack**          | `.push()`, `.pop()`, `.top()`                                  |
+| **Queue**          | `.push()`, `.pop()`, `.front()`, `.back()`                     |
+| **Priority Queue** | Max-Heap & Min-Heap examples                                   |
+| **Set**            | `.insert()`, `.find()`, convert to vector                      |
+| **Map**            | Insert, iterate, `.find()`                                     |
+| **Algorithms**     | `sort()`, `binary_search()`, `reverse()`, `accumulate()`       |
+
+---
+
+## **Usage**
+
+### **Compile & Run**
+
+```bash
+g++ STL_Reference.cpp -o stl_demo
+./stl_demo
+```
+
+---
+
+## **Why This is Useful**
+
+* Single file reference for **quick revision**.
+* Covers **basic operations** for each STL container.
+* Shows **common algorithms** in action.
+* Demonstrates **conversion between containers** (e.g., set → vector).
+
+This is perfect for **interview prep**, **placements**, and **daily practice**.
