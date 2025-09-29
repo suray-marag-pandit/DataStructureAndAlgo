@@ -1,6 +1,3 @@
-
-
-```markdown
 # DataStructureAndAlgo
 
 [![C++](https://img.shields.io/badge/Language-C%2B%2B-blue.svg)](https://en.cppreference.com/)
@@ -264,18 +261,3 @@ Contributions are welcome! Please follow these steps:
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
----
-
-**Happy Coding! 🚀**
-
-*Explore, learn, and contribute to this growing collection of data structures and algorithms!*
-
-```
-
-### 🔹 Improvements Added:
-- Structured headings with proper emojis for readability.
-- Clean code block formatting for commands.
-- Clear and concise **folder description**.
-- Enhanced readability using **bold text** and **line breaks**.
-- Professional and beginner-friendly layout following **open-source best practices**.
-```
