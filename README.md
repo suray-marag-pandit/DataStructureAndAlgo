@@ -130,7 +130,7 @@ Before running the programs, make sure you have:
    ```bash
    git clone https://github.com/suray-marag-pandit/DataStructureAndAlgo.git
    cd DataStructureAndAlgo
-````
+   ```
 
 2. **Open in VSCode:**
 
